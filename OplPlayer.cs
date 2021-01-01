@@ -10,7 +10,7 @@ public class OplPlayer : AudioStreamPlayer
         Name = "OplPlayer";
         Stream = new AudioStreamGenerator()
         {
-            MixRate = 48000,
+            MixRate = 44100,
             BufferLength = 0.05f, // Keep this as short as possible to minimize latency
         };
     }
@@ -81,9 +81,9 @@ public class OplPlayer : AudioStreamPlayer
     {
         if (Opl == null)
             return this;
-        int toFill = ((AudioStreamGeneratorPlayback)GetStreamPlayback()).GetFramesAvailable() * (Opl.IsStereo ? 2 : 1);
-        if (Buffer.Length < toFill)
-            Buffer = new short[toFill];
+        int toFill = ((AudioStreamGeneratorPlayback)GetStreamPlayback()).GetFramesAvailable();
+        if (ShortBuffer == null || ShortBuffer.Length < toFill)
+            ShortBuffer = new short[toFill];
 
         void FillBuffer2()
         {
@@ -97,7 +97,7 @@ public class OplPlayer : AudioStreamPlayer
                         return;
                 }
                 i = Math.Min(toFill, (int)(minicnt / Players[0].RefreshRate + 4) & ~3);
-                Players[0].Opl.ReadBuffer(Buffer, pos, i);
+                Players[0].Opl.ReadBuffer(ShortBuffer, pos, i);
                 pos += i;
                 toFill -= i;
                 minicnt -= (int)(Players[0].RefreshRate * i);
@@ -105,14 +105,14 @@ public class OplPlayer : AudioStreamPlayer
         }
         FillBuffer2();
 
-        Vector2[] buffer = new Vector2[toFill];
+        Vector2[] vector2Buffer = new Vector2[toFill];
         for (uint i = 0; i < toFill; i++)
         {
-            float soundbite = Buffer[i] / 32767f; // Convert from 16 bit signed integer audio to 32 bit signed float audio
-            buffer[i] = new Vector2(soundbite, soundbite);
+            float soundbite = ShortBuffer[i] / 32767f; // Convert from 16 bit signed integer audio to 32 bit signed float audio
+            vector2Buffer[i] = new Vector2(soundbite, soundbite);
         }
-        ((AudioStreamGeneratorPlayback)GetStreamPlayback()).PushBuffer(buffer);
+        ((AudioStreamGeneratorPlayback)GetStreamPlayback()).PushBuffer(vector2Buffer);
         return this;
     }
-    private short[] Buffer = new short[70000];
+    private short[] ShortBuffer;
 }
