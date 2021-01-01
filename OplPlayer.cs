@@ -84,6 +84,7 @@ public class OplPlayer : AudioStreamPlayer
         int toFill = ((AudioStreamGeneratorPlayback)GetStreamPlayback()).GetFramesAvailable();
         if (ShortBuffer == null || ShortBuffer.Length < toFill)
             ShortBuffer = new short[toFill];
+        Vector2[] vector2Buffer = new Vector2[toFill];
 
         void FillBuffer2()
         {
@@ -105,8 +106,7 @@ public class OplPlayer : AudioStreamPlayer
         }
         FillBuffer2();
 
-        Vector2[] vector2Buffer = new Vector2[toFill];
-        for (uint i = 0; i < toFill; i++)
+        for (uint i = 0; i < vector2Buffer.Length; i++)
         {
             float soundbite = ShortBuffer[i] / 32767f; // Convert from 16 bit signed integer audio to 32 bit signed float audio
             vector2Buffer[i] = new Vector2(soundbite, soundbite);
