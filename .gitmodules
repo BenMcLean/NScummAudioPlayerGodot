@@ -1,3 +1,6 @@
 [submodule "NScumm.Audio"]
 	path = NScumm.Audio
 	url = https://github.com/BenMcLean/NScumm.Audio.git
+[submodule "WOLF3D-Godot"]
+	path = WOLF3D-Godot
+	url = https://github.com/BenMcLean/WOLF3D-Godot.git

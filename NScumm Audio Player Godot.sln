@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NScumm Audio Player Godot",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NScumm.Audio", "NScumm.Audio\NScumm.Audio\NScumm.Audio.csproj", "{B4CF46B4-DFA8-425B-B0CB-1636DA05AB41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WOLF3DModel", "WOLF3D-Godot\WOLF3DModel\WOLF3DModel.csproj", "{BFC78344-D90C-4243-B8DB-0BBDDAD9DFD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,14 @@ Global
 		{B4CF46B4-DFA8-425B-B0CB-1636DA05AB41}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
 		{B4CF46B4-DFA8-425B-B0CB-1636DA05AB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4CF46B4-DFA8-425B-B0CB-1636DA05AB41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC78344-D90C-4243-B8DB-0BBDDAD9DFD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC78344-D90C-4243-B8DB-0BBDDAD9DFD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC78344-D90C-4243-B8DB-0BBDDAD9DFD1}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC78344-D90C-4243-B8DB-0BBDDAD9DFD1}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC78344-D90C-4243-B8DB-0BBDDAD9DFD1}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC78344-D90C-4243-B8DB-0BBDDAD9DFD1}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{BFC78344-D90C-4243-B8DB-0BBDDAD9DFD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC78344-D90C-4243-B8DB-0BBDDAD9DFD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

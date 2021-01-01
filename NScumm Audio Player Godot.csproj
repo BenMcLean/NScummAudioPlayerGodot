@@ -65,6 +65,10 @@
       <Project>{b4cf46b4-dfa8-425b-b0cb-1636da05ab41}</Project>
       <Name>NScumm.Audio</Name>
     </ProjectReference>
+    <ProjectReference Include="WOLF3D-Godot\WOLF3DModel\WOLF3DModel.csproj">
+      <Project>{bfc78344-d90c-4243-b8db-0bbddad9dfd1}</Project>
+      <Name>WOLF3DModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
