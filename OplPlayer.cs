@@ -77,6 +77,9 @@ public class OplPlayer : AudioStreamPlayer
         }
     }
 
+    public float Time = 0f;
+    private int minicnt;
+
     public OplPlayer FillBuffer()
     {
         if (Opl == null)
@@ -86,9 +89,20 @@ public class OplPlayer : AudioStreamPlayer
             ShortBuffer = new short[toFill];
         Vector2[] vector2Buffer = new Vector2[toFill];
 
+        /*
+        for (int i = 0; i < toFill; i++)
+        {
+            Time += 1f / MixRate;
+            float f = Mathf.Sin(Time * 440f);
+            //((AudioStreamGeneratorPlayback)GetStreamPlayback()).PushFrame(new Vector2(f, f));
+            vector2Buffer[i] = new Vector2(f, f);
+        }
+        ((AudioStreamGeneratorPlayback)GetStreamPlayback()).PushBuffer(vector2Buffer);
+        */
+
         void FillBuffer2()
         {
-            int i, minicnt = 0, pos = 0;
+            int i, pos = 0;
             while (toFill > 0)
             {
                 while (minicnt < 0)
@@ -98,7 +112,7 @@ public class OplPlayer : AudioStreamPlayer
                         return;
                 }
                 i = Math.Min(toFill, (int)(minicnt / Players[0].RefreshRate + 4) & ~3);
-                Players[0].Opl.ReadBuffer(ShortBuffer, pos, i);
+                Opl.ReadBuffer(ShortBuffer, pos, i);
                 pos += i;
                 toFill -= i;
                 minicnt -= (int)(Players[0].RefreshRate * i);
@@ -111,7 +125,9 @@ public class OplPlayer : AudioStreamPlayer
             float soundbite = ShortBuffer[i] / 32767f; // Convert from 16 bit signed integer audio to 32 bit signed float audio
             vector2Buffer[i] = new Vector2(soundbite, soundbite);
         }
-        ((AudioStreamGeneratorPlayback)GetStreamPlayback()).PushBuffer(vector2Buffer);
+        if (vector2Buffer.Length > 0)
+            ((AudioStreamGeneratorPlayback)GetStreamPlayback()).PushBuffer(vector2Buffer);
+
         return this;
     }
     private short[] ShortBuffer;

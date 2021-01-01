@@ -63,7 +63,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="OplPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SoundBlaster.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="NScumm.Audio\NScumm.Audio\NScumm.Audio.csproj">
