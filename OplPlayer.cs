@@ -25,13 +25,7 @@ public class OplPlayer : AudioStreamPlayer
         }
     }
 
-    public readonly IMusicPlayer[] Players = new IMusicPlayer[]
-    {
-            new ImfPlayer(),
-            new IdAdlPlayer(),
-    };
-    public ImfPlayer ImfPlayer => (ImfPlayer)Players[0];
-    public IdAdlPlayer IdAdlPlayer => (IdAdlPlayer)Players[1];
+    public IMusicPlayer MusicPlayer { get; set; } = null;
 
     public IOpl Opl
     {
@@ -41,8 +35,6 @@ public class OplPlayer : AudioStreamPlayer
             if ((opl = value) != null)
             {
                 Opl.Init((int)((AudioStreamGenerator)Stream).MixRate);
-                ImfPlayer.Opl = Opl;
-                IdAdlPlayer.Opl = Opl;
             }
         }
     }
@@ -93,25 +85,28 @@ public class OplPlayer : AudioStreamPlayer
                 while (minicnt < 0)
                 {
                     minicnt += MixRate;
-                    if (!Players[0].Update())
+                    if (!MusicPlayer.Update())
                         return;
                 }
-                i = Math.Min(toFill, (int)(minicnt / Players[0].RefreshRate + 4) & ~3);
+                i = Math.Min(toFill, (int)(minicnt / MusicPlayer.RefreshRate + 4) & ~3);
                 Opl.ReadBuffer(ShortBuffer, pos, i);
                 pos += i;
                 toFill -= i;
-                minicnt -= (int)(Players[0].RefreshRate * i);
+                minicnt -= (int)(MusicPlayer.RefreshRate * i);
             }
         }
         FillBuffer2();
-        Vector2[] vector2Buffer = new Vector2[pos];
-        for (uint i = 0; i < vector2Buffer.Length; i++)
+        if (pos > 0)
         {
-            float soundbite = ShortBuffer[i] / 32767f; // Convert from 16 bit signed integer audio to 32 bit signed float audio
-            vector2Buffer[i] = new Vector2(soundbite, soundbite); // Convert mono to stereo
+            Vector2[] vector2Buffer = new Vector2[pos];
+            for (uint i = 0; i < vector2Buffer.Length; i++)
+            {
+                float soundbite = ShortBuffer[i] / 32767f; // Convert from 16 bit signed integer audio to 32 bit signed float audio
+                vector2Buffer[i] = new Vector2(soundbite, soundbite); // Convert mono to stereo
+            }
+            if (vector2Buffer.Length > 0)
+                ((AudioStreamGeneratorPlayback)GetStreamPlayback()).PushBuffer(vector2Buffer);
         }
-        if (vector2Buffer.Length > 0)
-            ((AudioStreamGeneratorPlayback)GetStreamPlayback()).PushBuffer(vector2Buffer);
         return this;
     }
     private short[] ShortBuffer;
