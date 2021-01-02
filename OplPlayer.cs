@@ -59,7 +59,7 @@ public class OplPlayer : AudioStreamPlayer
 
     private void AudioPlayerThread()
     {
-        while (Playing)
+        while (Playing && MusicPlayer != null)
         {
             if (Opl == null)
                 Stop();
